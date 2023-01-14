@@ -1,8 +1,8 @@
 package com.eldorado.semana1.modelo;
 
 public class Parcelas {
-    private String data;
-    private Double valor;
+    String data;
+    Double valor;
 
     public String getData() {
         return data;

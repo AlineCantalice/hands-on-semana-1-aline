@@ -1,9 +1,9 @@
 package com.eldorado.semana1.modelo;
 
 public class Empresa {
-    private String nomeEmpresa;
-    private String mes;
-    private String ano;
+    String nomeEmpresa;
+    String mes;
+    String ano;
 
     public String getNomeEmpresa() {
         return nomeEmpresa;

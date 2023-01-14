@@ -1,19 +1,20 @@
 package com.eldorado.semana1.modelo;
 
-import java.util.List;
-import java.util.Map;
+import com.eldorado.semana1.utilidades.Utilidades;
 
-public class faturamento {
-    private Empresa empresa;
-    private String dataParcela1;
-    private Double parcela1;
+public class Faturamento {
+    Empresa empresa;
+    String dataParcela1;
+    Double parcela1;
 
-    private String dataParcela2;
-    private Double parcela2;
+    String dataParcela2;
+    Double parcela2;
 
-    private String dataParcela3;
-    private Double parcela3;
+    String dataParcela3;
+    Double parcela3;
 
+    public Faturamento() {
+    }
 
     public Empresa getEmpresa() {
         return empresa;
@@ -39,6 +40,10 @@ public class faturamento {
         this.parcela1 = parcela1;
     }
 
+    public void setParcela1(String parcela1) {
+        this.parcela1 = Utilidades.lerValorDoubleUsuario(parcela1);
+    }
+
     public String getDataParcela2() {
         return dataParcela2;
     }
@@ -55,6 +60,10 @@ public class faturamento {
         this.parcela2 = parcela2;
     }
 
+    public void setParcela2(String parcela2) {
+        this.parcela2 = Utilidades.lerValorDoubleUsuario(parcela2);
+    }
+
     public String getDataParcela3() {
         return dataParcela3;
     }
@@ -69,6 +78,10 @@ public class faturamento {
 
     public void setParcela3(Double parcela3) {
         this.parcela3 = parcela3;
+    }
+
+    public void setParcela3(String parcela3) {
+        this.parcela3 = Utilidades.lerValorDoubleUsuario(parcela3);
     }
 
     @Override

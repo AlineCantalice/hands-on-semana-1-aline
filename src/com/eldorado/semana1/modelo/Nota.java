@@ -1,10 +1,12 @@
 package com.eldorado.semana1.modelo;
 
+import com.eldorado.semana1.utilidades.Utilidades;
+
 public class Nota {
-    private Empresa empresa;
-    private Double valor;
-    private String dataEmissao;
-    private Integer valorNota;
+    Empresa empresa;
+    Double valor;
+    String dataEmissao;
+    Integer valorNota;
 
     public Empresa getEmpresa() {
         return empresa;
@@ -22,6 +24,10 @@ public class Nota {
         this.valor = valor;
     }
 
+    public void setValor(String valor) {
+        this.valor = Utilidades.lerValorDoubleUsuario(valor);
+    }
+
     public String getDataEmissao() {
         return dataEmissao;
     }
@@ -36,6 +42,10 @@ public class Nota {
 
     public void setValorNota(Integer valorNota) {
         this.valorNota = valorNota;
+    }
+
+    public void setValorNota(String valorNota) {
+        this.valorNota = Utilidades.lerIntegerUsuario(valorNota);
     }
 
     @Override

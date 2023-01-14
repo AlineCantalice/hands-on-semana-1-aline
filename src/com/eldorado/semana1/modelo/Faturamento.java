@@ -13,9 +13,6 @@ public class Faturamento {
     String dataParcela3;
     Double parcela3;
 
-    public Faturamento() {
-    }
-
     public Empresa getEmpresa() {
         return empresa;
     }

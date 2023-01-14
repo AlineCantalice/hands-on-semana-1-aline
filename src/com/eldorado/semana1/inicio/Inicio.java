@@ -27,11 +27,25 @@ public class Inicio {
     public void lerArquivoNota() {
         var gerenciadorArquivos = new GerenciadorDeArquivos();
 
-        List<Nota> notas = gerenciadorArquivos.lerArquivoNota("nota_old");
+        List<Nota> notas = gerenciadorArquivos.lerArquivoNota("nota");
 
         List<Nota> listNota = notas.stream().collect(Collectors.toList());
 
         LOGGER.info(String.format("dados: %s", listNota));
 
+    }
+
+    public void lerArquivoFaturamentoPorAno(String ano){
+        var gerenciadorArquivo = new GerenciadorDeArquivos();
+        List<Faturamento> faturamentos = gerenciadorArquivo.lerFaturamentoPorAno(ano);
+
+        LOGGER.info(String.format("dados: %s", faturamentos));
+    }
+
+    public void lerArquivoNotaPorAno(String ano){
+        var gerenciadorArquivo = new GerenciadorDeArquivos();
+        List<Nota> notas = gerenciadorArquivo.lerNotaPorAno(ano);
+
+        LOGGER.info(String.format("dados: %s", notas));
     }
 }

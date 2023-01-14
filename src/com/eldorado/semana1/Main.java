@@ -1,7 +1,6 @@
 package com.eldorado.semana1;
 
 import com.eldorado.semana1.inicio.Inicio;
-import com.eldorado.semana1.utilidades.GerenciadorDeArquivos;
 
 import java.util.Objects;
 import java.util.Scanner;
@@ -22,10 +21,24 @@ public class Main {
             var opcao = SCANNER.nextLine();
 
             if (Objects.equals(opcao, "1")) {
-                inicio.lerArquivoFaturamento();
+                System.out.println("Digite 1 - Gerar relatório;\nDigite 2 - Gerar relatório por ano;\nDigite 0 - Voltar;");
+                var subMenu = SCANNER.nextLine();
+                if(Objects.equals(subMenu, "1")){
+                    inicio.lerArquivoFaturamento();
+                } else if(Objects.equals(subMenu, "2")){
+                    System.out.println("Digite o ano que deseja;");
+                    inicio.lerArquivoFaturamentoPorAno(SCANNER.nextLine());
+                }
             } else if (Objects.equals(opcao, "2")) {
-                inicio.lerArquivoNota();
-            } else if (Objects.equals(opcao, "0")) {
+                System.out.println("Digite 1 - Gerar relatório;\nDigite 2 - Gerar relatório por ano;\nDigite 0 - Voltar;");
+                var subMenu = SCANNER.nextLine();
+                if(Objects.equals(subMenu, "1")){
+                    inicio.lerArquivoNota();
+                } else if(Objects.equals(subMenu, "2")){
+                    System.out.println("Digite o ano que deseja;");
+                    inicio.lerArquivoNotaPorAno(SCANNER.nextLine());
+                }
+            }  else if (Objects.equals(opcao, "0")) {
                 break;
             } else {
                 LOGGER.info("Valor Digitado Invalido");

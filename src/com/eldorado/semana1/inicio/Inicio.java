@@ -48,6 +48,13 @@ public class Inicio {
         LOGGER.info(String.format("%s", notas));
     }
 
+    public void lerRelatorioAno(String ano, String nomeArquivo) {
+        var gerenciadorArquivo = new GerenciadorDeArquivos();
+        List<Relatorio> relatorios = gerenciadorArquivo.lerRelatorioAno(ano, nomeArquivo).stream().collect(Collectors.toList());
+
+        LOGGER.info(String.format("%s", relatorios));
+    }
+
     public void escreverRelatorio(){
         var gerenciadorArquivo = new GerenciadorDeArquivos();
 

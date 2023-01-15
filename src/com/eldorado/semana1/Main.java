@@ -17,7 +17,7 @@ public class Main {
         var inicio = new Inicio();
 
         while (true) {
-            System.out.println("Digite 1 - Relatório faturamento;\nDigite 2 - Relatório nota;\nDigite 0 - Sair;");
+            System.out.println("Digite 1 - Menu faturamento;\nDigite 2 - Menu nota;\nDigite 3 - Menu relatório\nDigite 0 - Sair;");
             var opcao = SCANNER.nextLine();
 
             if (Objects.equals(opcao, "1")) {
@@ -38,11 +38,22 @@ public class Main {
                     System.out.println("Digite o ano que deseja;");
                     inicio.lerArquivoNotaPorAno(SCANNER.nextLine());
                 }
-            }  else if (Objects.equals(opcao, "0")) {
+            }  else if(Objects.equals(opcao, "3")) {
+                System.out.println("Digite 1 - Escrever relatórios;\nDigite 2 - Ler relatório conformidade por ano;\nDigite 3 - Ler relatório não conformidade por ano;\nDigite 0 - Voltar;");
+                var subMenu = SCANNER.nextLine();
+                if (Objects.equals(subMenu, "1")){
+                    inicio.escreverRelatorio();
+                } else if (Objects.equals(subMenu, "2")){
+                    System.out.println("Digite o ano que deseja;");
+                    inicio.lerRelatorioAno(SCANNER.nextLine(), "conformidade");
+                } else if (Objects.equals(subMenu, "3")){
+                    System.out.println("Digite o ano que deseja;");
+                    inicio.lerRelatorioAno(SCANNER.nextLine(), "nao-conformidade");
+                }
+            } else if (Objects.equals(opcao, "0")) {
                 break;
             } else {
-                LOGGER.info("Valor Digitado Invalido");
-                inicio.escreverRelatorio();
+                LOGGER.info("Valor Digitado Inválido");
             }
         }
     }

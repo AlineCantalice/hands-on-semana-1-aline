@@ -75,22 +75,43 @@ public class GerenciadorDeArquivos {
         return notas;
     }
 
+    public List<Relatorio> lerRelatorioAno(String ano, String nomeArquivo) {
+        List<Relatorio> relatorios = new ArrayList<>();
+
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(String.format("%s/%s.txt", CAMINHO, nomeArquivo)))) {
+            bufferedReader.readLine();
+            String line = bufferedReader.readLine();
+            while (line != null) {
+                String[] vetor = line.split(";");
+                var relatorio = new Relatorio();
+                relatorio.setNomeEmpresa(vetor[0]);
+                relatorio.setAno(vetor[1]);
+                relatorio.setTotalFaturamento(getNovoValor(vetor[2]));
+                relatorio.setTotalNota(getNovoValor(vetor[3]));
+
+                relatorios.add(relatorio);
+                line = bufferedReader.readLine();
+            }
+        } catch (IOException | ParseException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage());
+        }
+        return relatorios.stream().filter(relatorio -> Objects.equals(relatorio.getAno(), ano)).collect(Collectors.toList());
+    }
+
     public List<Faturamento> lerFaturamentoPorAno(String ano) {
         var gerenciadorArquivos = new GerenciadorDeArquivos();
         var faturamentos = gerenciadorArquivos.lerArquivoFaturamento("faturamento");
 
-        var faturamentoAno = faturamentos.stream().filter(faturamento -> Objects.equals(faturamento.getAno(), ano)).collect(Collectors.toList());
+        return faturamentos.stream().filter(faturamento -> Objects.equals(faturamento.getAno(), ano)).collect(Collectors.toList());
 
-        return faturamentoAno;
     }
 
     public List<Nota> lerNotaPorAno(String ano) {
         var gerenciadorArquivos = new GerenciadorDeArquivos();
         var notas = gerenciadorArquivos.lerArquivoNota("nota");
 
-        var notaAno = notas.stream().filter(nota -> Objects.equals(nota.getAno(), ano)).collect(Collectors.toList());
+        return notas.stream().filter(nota -> Objects.equals(nota.getAno(), ano)).collect(Collectors.toList());
 
-        return notaAno;
     }
 
     public void escreverArquivo(List<Relatorio> relatorios, String nomeDoArquivo) {

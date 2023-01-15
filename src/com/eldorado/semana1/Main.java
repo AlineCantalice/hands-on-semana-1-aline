@@ -42,7 +42,14 @@ public class Main {
                 System.out.println("Digite 1 - Escrever relatórios;\nDigite 2 - Ler relatório conformidade por ano;\nDigite 3 - Ler relatório não conformidade por ano;\nDigite 0 - Voltar;");
                 var subMenu = SCANNER.nextLine();
                 if (Objects.equals(subMenu, "1")){
-                    inicio.escreverRelatorio();
+                    System.out.println("Digite 1 - Escrever relatório de todos os anos;\nDigite 2 - Escolher o ano;");
+                    var subSubMenu = SCANNER.nextLine();
+                    if (Objects.equals(subSubMenu, "1")){
+                        inicio.escreverRelatorio();
+                    } else if (Objects.equals(subSubMenu, "2")) {
+                        System.out.println("Digite o ano que deseja;");
+                        inicio.escreverRelatorioPorAno(SCANNER.nextLine());
+                    }
                 } else if (Objects.equals(subMenu, "2")){
                     System.out.println("Digite o ano que deseja;");
                     inicio.lerRelatorioAno(SCANNER.nextLine(), "conformidade");

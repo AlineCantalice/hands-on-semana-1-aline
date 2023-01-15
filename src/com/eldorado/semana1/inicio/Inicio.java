@@ -96,4 +96,46 @@ public class Inicio {
             gerenciadorArquivo.escreverArquivo(relatoriosNaoConformidade, "nao-conformidade");
         }
     }
+
+    public void escreverRelatorioPorAno(String ano){
+        var gerenciadorArquivo = new GerenciadorDeArquivos();
+
+        List<Faturamento> faturamentos = gerenciadorArquivo.lerArquivoFaturamento("faturamento");
+        List<Nota> notas = gerenciadorArquivo.lerArquivoNota("nota");
+        List<Relatorio> relatoriosConformidade = new ArrayList<>();
+        List<Relatorio> relatoriosNaoConformidade = new ArrayList<>();
+
+        Map<String, Map<String, List<Nota>>> mapNotas = notas.parallelStream().collect(groupingBy(Nota::getNomeEmpresa, Collectors.groupingBy(Nota::getAno)));
+
+        Map<String, Map<String, List<Faturamento>>> mapFaturamento = faturamentos.parallelStream().collect(groupingBy(Faturamento::getNomeEmpresa, Collectors.groupingBy(Faturamento::getAno)));
+
+        mapNotas.forEach((key, values) -> {
+            values.forEach((subKey, subValues) -> {
+                var valorNotaAno = subValues.stream().mapToDouble(Nota::getValor).sum();
+                var valorFaturamentoAno = Optional.ofNullable(mapFaturamento.get(key).get(subKey)).orElse(new ArrayList<>()).stream().mapToDouble(Faturamento::getTotal).sum();
+                var relatorio = new Relatorio();
+                if (valorNotaAno == valorFaturamentoAno){
+                    relatorio.setNomeEmpresa(key);
+                    relatorio.setTotalFaturamento(valorFaturamentoAno);
+                    relatorio.setTotalNota(valorNotaAno);
+                    relatorio.setAno(subKey);
+
+                    relatoriosConformidade.add(relatorio);
+                } else {
+                    relatorio.setNomeEmpresa(key);
+                    relatorio.setTotalFaturamento(valorFaturamentoAno);
+                    relatorio.setTotalNota(valorNotaAno);
+                    relatorio.setAno(subKey);
+
+                    relatoriosNaoConformidade.add(relatorio);
+                }
+            });
+        });
+        if (!relatoriosConformidade.isEmpty()){
+            gerenciadorArquivo.escreverArquivo(relatoriosConformidade.stream().filter(relatorio -> Objects.equals(relatorio.getAno(), ano)).collect(Collectors.toList()), String.format("conformidade-%s", ano));
+        }
+        if (!relatoriosNaoConformidade.isEmpty()) {
+            gerenciadorArquivo.escreverArquivo(relatoriosNaoConformidade.stream().filter(relatorio -> Objects.equals(relatorio.getAno(), ano)).collect(Collectors.toList()), String.format("nao-conformidade-%s", ano));
+        }
+    }
 }

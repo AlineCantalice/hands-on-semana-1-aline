@@ -42,6 +42,7 @@ public class Main {
                 break;
             } else {
                 LOGGER.info("Valor Digitado Invalido");
+                inicio.escreverRelatorio();
             }
         }
     }

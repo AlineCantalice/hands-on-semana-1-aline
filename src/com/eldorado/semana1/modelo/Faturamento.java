@@ -2,8 +2,10 @@ package com.eldorado.semana1.modelo;
 
 import com.eldorado.semana1.utilidades.Utilidades;
 
-public class Faturamento {
-    Empresa empresa;
+public class Faturamento implements Comparable<Faturamento> {
+    String nomeEmpresa;
+    String mes;
+    String ano;
     String dataParcela1;
     Double parcela1;
 
@@ -13,12 +15,28 @@ public class Faturamento {
     String dataParcela3;
     Double parcela3;
 
-    public Empresa getEmpresa() {
-        return empresa;
+    public String getNomeEmpresa() {
+        return nomeEmpresa;
     }
 
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
+    public void setNomeEmpresa(String nomeEmpresa) {
+        this.nomeEmpresa = nomeEmpresa;
+    }
+
+    public String getMes() {
+        return mes;
+    }
+
+    public void setMes(String mes) {
+        this.mes = mes;
+    }
+
+    public String getAno() {
+        return ano;
+    }
+
+    public void setAno(String ano) {
+        this.ano = ano;
     }
 
     public String getDataParcela1() {
@@ -81,8 +99,17 @@ public class Faturamento {
         this.parcela3 = Utilidades.lerValorDoubleUsuario(parcela3);
     }
 
+    public Double getTotal() {
+        return parcela1 + parcela2 + parcela3;
+    }
+
     @Override
     public String toString() {
-        return String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s", empresa.getNomeEmpresa(), empresa.getMes(), empresa.getAno(), dataParcela1, parcela1, dataParcela2, parcela2, dataParcela3, parcela3);
+        return String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s", nomeEmpresa, mes, ano, dataParcela1, parcela1, dataParcela2, parcela2, dataParcela3, parcela3);
+    }
+
+    @Override
+    public int compareTo(Faturamento o) {
+        return nomeEmpresa.compareTo(o.getNomeEmpresa());
     }
 }

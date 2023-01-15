@@ -1,8 +1,8 @@
 package com.eldorado.semana1.utilidades;
 
-import com.eldorado.semana1.modelo.Empresa;
 import com.eldorado.semana1.modelo.Faturamento;
 import com.eldorado.semana1.modelo.Nota;
+import com.eldorado.semana1.modelo.Relatorio;
 
 import java.io.*;
 import java.io.FileReader;
@@ -31,11 +31,9 @@ public class GerenciadorDeArquivos {
             while(line != null){
                 String[] vetor = line.split(";");
                 var faturamento = new Faturamento();
-                var empresa = new Empresa();
-                empresa.setNomeEmpresa(vetor[0]);
-                empresa.setMes(vetor[1]);
-                empresa.setAno(vetor[2]);
-                faturamento.setEmpresa(empresa);
+                faturamento.setNomeEmpresa(vetor[0]);
+                faturamento.setMes(vetor[1]);
+                faturamento.setAno(vetor[2]);
                 faturamento.setDataParcela1(vetor[3]);
                 faturamento.setParcela1(getNovoValor(vetor[4]));
                 faturamento.setDataParcela2(vetor[5]);
@@ -61,11 +59,9 @@ public class GerenciadorDeArquivos {
             while(line != null){
                 String[] vetor = line.split(";", 6);
                 var nota = new Nota();
-                var empresa = new Empresa();
-                empresa.setNomeEmpresa(vetor[0]);
-                empresa.setMes(vetor[1]);
-                empresa.setAno(vetor[2]);
-                nota.setEmpresa(empresa);
+                nota.setNomeEmpresa(vetor[0]);
+                nota.setMes(vetor[1]);
+                nota.setAno(vetor[2]);
                 nota.setValor(getNovoValor(vetor[3]));
                 nota.setDataEmissao(vetor[4]);
                 nota.setValorNota(vetor[5]);
@@ -83,7 +79,7 @@ public class GerenciadorDeArquivos {
         var gerenciadorArquivos = new GerenciadorDeArquivos();
         var faturamentos = gerenciadorArquivos.lerArquivoFaturamento("faturamento");
 
-        var faturamentoAno = faturamentos.stream().filter(faturamento -> Objects.equals(faturamento.getEmpresa().getAno(), ano)).collect(Collectors.toList());
+        var faturamentoAno = faturamentos.stream().filter(faturamento -> Objects.equals(faturamento.getAno(), ano)).collect(Collectors.toList());
 
         return faturamentoAno;
     }
@@ -92,9 +88,19 @@ public class GerenciadorDeArquivos {
         var gerenciadorArquivos = new GerenciadorDeArquivos();
         var notas = gerenciadorArquivos.lerArquivoNota("nota");
 
-        var notaAno = notas.stream().filter(nota -> Objects.equals(nota.getEmpresa().getAno(), ano)).collect(Collectors.toList());
+        var notaAno = notas.stream().filter(nota -> Objects.equals(nota.getAno(), ano)).collect(Collectors.toList());
 
         return notaAno;
+    }
+
+    public void escreverArquivo(List<Relatorio> relatorios, String nomeDoArquivo) {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(String.format("%s/%s.txt", CAMINHO, nomeDoArquivo), true))) {
+            for (Relatorio relatorio : relatorios) {
+                bufferedWriter.append(relatorio.toString()).append("\n");
+            }
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage());
+        }
     }
 
     private static double getNovoValor(String valor) throws ParseException {

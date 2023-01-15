@@ -2,18 +2,36 @@ package com.eldorado.semana1.modelo;
 
 import com.eldorado.semana1.utilidades.Utilidades;
 
-public class Nota {
-    Empresa empresa;
+public class Nota implements Comparable<Nota>  {
+    String nomeEmpresa;
+    String mes;
+    String ano;
     Double valor;
     String dataEmissao;
     Integer valorNota;
 
-    public Empresa getEmpresa() {
-        return empresa;
+    public String getNomeEmpresa() {
+        return nomeEmpresa;
     }
 
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
+    public void setNomeEmpresa(String nomeEmpresa) {
+        this.nomeEmpresa = nomeEmpresa;
+    }
+
+    public String getMes() {
+        return mes;
+    }
+
+    public void setMes(String mes) {
+        this.mes = mes;
+    }
+
+    public String getAno() {
+        return ano;
+    }
+
+    public void setAno(String ano) {
+        this.ano = ano;
     }
 
     public Double getValor() {
@@ -50,6 +68,11 @@ public class Nota {
 
     @Override
     public String toString() {
-        return String.format("%s;%s;%s;%s;%s;%s", empresa.getNomeEmpresa(), empresa.getMes(), empresa.getAno(), valor, dataEmissao, valorNota);
+        return String.format("%s;%s;%s;%s;%s;%s", nomeEmpresa, mes, ano, valor, dataEmissao, valorNota);
+    }
+
+    @Override
+    public int compareTo(Nota o) {
+        return nomeEmpresa.compareTo(o.getNomeEmpresa());
     }
 }
